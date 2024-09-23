@@ -1,0 +1,14 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "main": "Compute.js",
+  "scripts": {
+    "test": "jest tests/*"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "rewire": "^7.0.0"
+  }
+}

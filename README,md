@@ -1,0 +1,4 @@
+# Push to new schedule
+
+1: Overwrite the script id in file `.clasp.json` with the new sheet project id (ie open up App script in browser)
+2: Add onChange trigger to execute function onChange
