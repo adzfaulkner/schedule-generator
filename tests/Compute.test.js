@@ -64,33 +64,33 @@ describe('handleRefAllocations', function () {
 
 describe('Compute', function () {
     it('should produce what is expected', function () {
-        const { poolStandings, refRefTally, refTally, pitches, times, fixturesByPitchAndTime } = Compute(values, referees)
+        const { poolsTeamsPerformance, refRefTally, refTally, pitches, times, fixturesByPitchAndTime } = Compute(values, referees)
 
-        expect(Array.from(poolStandings.keys())).toEqual(['POOL A', 'POOL B', 'POOL C', 'POOL D'])
+        expect(Array.from(poolsTeamsPerformance.keys())).toEqual(['POOL A', 'POOL B', 'POOL C', 'POOL D'])
 
         // team w d l ts ta td pts
-        expect(poolStandings.get('POOL A')).toEqual([
-            ['C', 1, 1, 0, 0, 5, 2, 3, 4],
-            ['A', 2, 0, 1, 1, 3, 6, -3, 3],
-            ['B', 1, 0, 1, 0, 1, 1, 0, 2],
+        expect(Array.from(poolsTeamsPerformance.get('POOL A'))).toEqual([
+            ['A', [2, 0, 1, 1, 3, 6, -3, 3]],
+            ['B', [1, 0, 1, 0, 1, 1, 0, 2]],
+            ['C', [1, 1, 0, 0, 5, 2, 3, 4]],
         ])
 
-        expect(poolStandings.get('POOL B')).toEqual([
-            ['D', 1, 1, 0, 0, 2, 0, 2, 4],
-            ['E', 1, 0, 0, 1, 0, 2, -2, 1],
-            ['F', 0, 0, 0, 0, 0, 0, 0, 0],
+        expect(Array.from(poolsTeamsPerformance.get('POOL B'))).toEqual([
+            ['D', [1, 1, 0, 0, 2, 0, 2, 4]],
+            ['E', [1, 0, 0, 1, 0, 2, -2, 1]],
+            ['F', [0, 0, 0, 0, 0, 0, 0, 0]],
         ])
 
-        expect(poolStandings.get('POOL C')).toEqual([
-            ['G', 1, 1, 0, 0, 10, 2, 8, 4],
-            ['H', 1, 0, 0, 1, 2, 10, -8, 1],
-            ['I', 0, 0, 0, 0, 0, 0, 0, 0],
+        expect(Array.from(poolsTeamsPerformance.get('POOL C'))).toEqual([
+            ['G', [1, 1, 0, 0, 10, 2, 8, 4]],
+            ['H', [1, 0, 0, 1, 2, 10, -8, 1]],
+            ['I', [0, 0, 0, 0, 0, 0, 0, 0]],
         ])
 
-        expect(poolStandings.get('POOL D')).toEqual([
-            ['J', 0, 0, 0, 0, 0, 0, 0, 0],
-            ['K', 0, 0, 0, 0, 0, 0, 0, 0],
-            ['L', 0, 0, 0, 0, 0, 0, 0, 0],
+        expect(Array.from(poolsTeamsPerformance.get('POOL D'))).toEqual([
+            ['J', [0, 0, 0, 0, 0, 0, 0, 0]],
+            ['K', [0, 0, 0, 0, 0, 0, 0, 0]],
+            ['L', [0, 0, 0, 0, 0, 0, 0, 0]],
         ])
 
         expect(Array.from(refRefTally.keys())).toEqual(['Ref 1', 'Ref 2', 'Ref 3', 'Ref 4', 'Ref 5', 'Ref 6', 'Ref 7', 'Ref 8'])

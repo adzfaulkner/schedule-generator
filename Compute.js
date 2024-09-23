@@ -25,27 +25,27 @@ const columnToLetter = (column) => {
   return letter
 }
 
-const sortPositions = (a, b) => {
-  if (a[8] < b[8]) {
+const sortPositions = ([hname,[,,,,hts,,htd,hpts]], [aname,[,,,,ats,,atd,apts]]) => {
+  if (hpts < apts) {
     return 1
-  } else if (a[8] > b[8]) {
+  } else if (hts > apts) {
     return -1
   }
 
-  if (a[7] < b[7]) {
+  if (htd < atd) {
     return 1
-  } else if (a[7] > b[7]) {
+  } else if (htd > atd) {
     return -1
   }
 
-  if (a[5] < b[5]) {
+  if (hts < ats) {
     return 1
-  } else if (a[5] > b[5]) {
+  } else if (htd > ats) {
     return -1
   }
 
   // absolute default is to sort by team name
-  return ( ( a[0] === b[0] ) ? 0 : ( ( a[0] > b[0] ) ? 1 : -1 ) )
+  return ( ( hname === aname ) ? 0 : ( ( hname > aname ) ? 1 : -1 ) )
 }
 
 const computePerf = (hperf, hs, aperf, as) => {
@@ -97,7 +97,7 @@ const handleRefAllocations = (refRefTally, refTally, [,,,,,,,...refs]) => {
   }
 }
 
-const handleStandings = (poolStandings, [,,stage,home,homeScore,away,awayScore]) => {
+const handleTeamPerformance = (poolsTeamsPerformance, [,,stage,home,homeScore,away,awayScore]) => {
   // pl w d l tf ta td pts
   const initialPerf = [0, 0, 0, 0, 0, 0, 0, 0]
 
@@ -105,18 +105,18 @@ const handleStandings = (poolStandings, [,,stage,home,homeScore,away,awayScore])
     return
   }
 
-  if (!poolStandings.has(stage)) {
-    poolStandings.set(stage, new Map())
+  if (!poolsTeamsPerformance.has(stage)) {
+    poolsTeamsPerformance.set(stage, new Map())
   }
 
-  const poolStanding = poolStandings.get(stage)
+  const poolTeamsPerformance = poolsTeamsPerformance.get(stage)
 
-  if (!poolStanding.has(home)) {
-    poolStanding.set(home, [...initialPerf])
+  if (!poolTeamsPerformance.has(home)) {
+    poolTeamsPerformance.set(home, [...initialPerf])
   }
 
-  if (!poolStanding.has(away)) {
-    poolStanding.set(away, [...initialPerf])
+  if (!poolTeamsPerformance.has(away)) {
+    poolTeamsPerformance.set(away, [...initialPerf])
   }
 
   if (homeScore === '' || awayScore === '') {
@@ -124,9 +124,9 @@ const handleStandings = (poolStandings, [,,stage,home,homeScore,away,awayScore])
   }
 
   computePerf(
-      poolStanding.get(home),
+      poolTeamsPerformance.get(home),
       parseInt(homeScore, 10),
-      poolStanding.get(away),
+      poolTeamsPerformance.get(away),
       parseInt(awayScore, 10)
   )
 }
@@ -226,7 +226,7 @@ const writeStandings = (sStandings, poolStandings) => {
     for (const l of sorted) {
       lines.push([
           pos.toString(),
-          ...l
+          ...[l[0], ...l[1]]
       ])
       pos++
     }
@@ -284,7 +284,7 @@ const writeSchedule = (sSchedule, fixturesByPitchAndTime, pitches, times) => {
 }
 
 function Compute(fixtures, referees) {
-  const poolStandings = new Map()
+  const poolsTeamsPerformance = new Map()
 
   const refTally = new Map(referees.map(referee => [referee[0], 0]))
   const refRefTally = new Map(referees.map(referee => [referee[0], new Map(refTally)]))
@@ -302,12 +302,12 @@ function Compute(fixtures, referees) {
     times.add(fixture[0])
 
     handleRefAllocations(refRefTally, refTally, fixture)
-    handleStandings(poolStandings, fixture)
+    handleTeamPerformance(poolsTeamsPerformance, fixture)
     handleFixturesByPitchAndTime(fixturesByPitchAndTime, fixture)
   }
 
   return {
-    poolStandings,
+    poolsTeamsPerformance,
     refRefTally,
     refTally,
     pitches,
@@ -333,10 +333,10 @@ function onChange(e) {
   const fixtureValues = sRaw.getRange(FIXTURE_RANGE).getValues()
   const refereeValues = sRefCrosstable.getRange(REF_NAMES_RANGE).getValues()
 
-  const { poolStandings, refRefTally, refTally, fixturesByPitchAndTime, pitches, times } = Compute(fixtureValues, refereeValues)
+  const { poolsTeamsPerformance, refRefTally, refTally, fixturesByPitchAndTime, pitches, times } = Compute(fixtureValues, refereeValues)
 
   writeRefCrosstable(sRefCrosstable, refRefTally, refTally)
-  writeStandings(sStandings, poolStandings)
+  writeStandings(sStandings, poolsTeamsPerformance)
   writeRefAllocations(sRefAllocs, fixturesByPitchAndTime, pitches, times)
   writeSchedule(sSchedule, fixturesByPitchAndTime, pitches, times)
 }
