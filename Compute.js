@@ -28,7 +28,7 @@ const columnToLetter = (column) => {
 const sortPositions = ([hname,[,,,,hts,,htd,hpts]], [aname,[,,,,ats,,atd,apts]]) => {
   if (hpts < apts) {
     return 1
-  } else if (hts > apts) {
+  } else if (hpts > apts) {
     return -1
   }
 
@@ -40,7 +40,7 @@ const sortPositions = ([hname,[,,,,hts,,htd,hpts]], [aname,[,,,,ats,,atd,apts]])
 
   if (hts < ats) {
     return 1
-  } else if (htd > ats) {
+  } else if (hts > ats) {
     return -1
   }
 
@@ -200,10 +200,10 @@ const writeRefCrosstable = (sRefCrosstable, refRefTally, refTally) => {
   sRefCrosstable.getRange(REF_REF_TALLY_RANGE).setValues(lines)
 }
 
-const writeStandings = (sStandings, poolStandings) => {
+const writeStandings = (sStandings, poolsTeamsPerformance) => {
   const lines = []
 
-  for ([pool, standings] of poolStandings.entries()) {
+  for ([pool, teamsPerformance] of poolsTeamsPerformance.entries()) {
     lines.push([
         pool,
         '',
@@ -219,13 +219,13 @@ const writeStandings = (sStandings, poolStandings) => {
 
     lines.push(STANDING_HEADER)
 
-    const sorted = Array.from(standings)
+    const sorted = Array.from(teamsPerformance)
         .sort(sortPositions)
 
     let pos = 1
     for (const l of sorted) {
       lines.push([
-          pos.toString(),
+          pos,
           ...[l[0], ...l[1]]
       ])
       pos++
