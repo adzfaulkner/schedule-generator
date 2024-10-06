@@ -1,8 +1,6 @@
-const rewire = require('rewire')
+import { describe, expect, it } from 'vitest'
 
-const sut = rewire('../Compute.js')
-
-const columnToLetter = sut.__get__('columnToLetter')
+import { columnToLetter } from '../src/columnToLetter'
 
 describe('columnToLetter', function () {
     it('produces what is expected', function () {
