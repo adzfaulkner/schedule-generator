@@ -12,6 +12,14 @@ jobs:
     name: Run Tests
     runs-on: ubuntu-latest
     steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.CR_PAT }}
+      - name: Pull docker images
+        run: make docker_pull_image
       - uses: actions/checkout@v2
       - name: Setup
         run: make setup

@@ -1,4 +1,4 @@
-IMAGE_TAG_JS=app_script_js
+IMAGE_TAG_JS=schedule_generator_js
 
 build:
 	docker build --tag ${IMAGE_TAG_JS} .
@@ -26,3 +26,12 @@ gas_push:
 setup:
 	make build
 	make js_run_command cmd='npm install'
+
+docker_build_tag_push:
+	make build
+	docker tag ${IMAGE_TAG_JS}:latest ghcr.io/adzfaulkner/${IMAGE_TAG_JS}:latest
+	docker push ghcr.io/adzfaulkner/${IMAGE_TAG_JS}:latest
+
+docker_pull_image:
+	docker pull ghcr.io/adzfaulkner/${IMAGE_TAG_JS}:latest
+	docker tag ghcr.io/adzfaulkner/${IMAGE_TAG_JS}:latest ${IMAGE_TAG_JS}:latest
