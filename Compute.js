@@ -7,7 +7,7 @@ const REF_REF_TALLY_RANGE = 'D2:M9'
 const STANDINGS_RANGE = 'A1:J'
 const STANDING_HEADER = ['Pos', 'Team', 'Pl', 'W', 'D', 'L', 'TF', 'TA', 'TD', 'Pts']
 // schedule row number that pitches should be written on
-const SCHEDULE_WRITE_FROM_ROW = 18;
+const SCHEDULE_WRITE_FROM_ROW = 18
 
 const PTS_WIN = 4
 const PTS_DRAW = 2

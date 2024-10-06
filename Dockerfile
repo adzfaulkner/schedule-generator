@@ -4,6 +4,5 @@ WORKDIR /app
 
 COPY package.* ./
 
-RUN npm i @google/clasp -g \
-    && npm install jest --global \
+RUN npm install @google/clasp typescript jest -g \
     && npm install

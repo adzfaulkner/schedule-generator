@@ -1,24 +1,18 @@
-const rewire = require('rewire')
+import { describe, expect, it } from 'vitest'
+import Sheet = GoogleAppsScript.Spreadsheet.Sheet
+import Range = GoogleAppsScript.Spreadsheet.Range
+import { mock } from 'vitest-mock-extended'
 
-const sut = rewire('../Compute.js')
-
-const writeStandings = sut.__get__('writeStandings')
+import { writeStandings } from '../src/writeStandings'
+import type { PoolTeamsPerformance } from '../src/types'
 
 describe('writeStandings', function () {
     it('produces what is expected', function () {
-        let expectedRange = ''
-        let expectedVals = []
+        const sStandings = mock<Sheet>()
+        const range = mock<Range>()
 
-        const sStandings = {
-            getRange: (range) => {
-                expectedRange = range
-                return {
-                    setValues: (vals) => {
-                        expectedVals = vals
-                    }
-                }
-            }
-        }
+        // @ts-ignore
+        sStandings.getRange.mockReturnValue(range)
 
         const poolA = new Map([
             ['Team 1', [3,0,3,0,14,14,0,6]],
@@ -37,13 +31,13 @@ describe('writeStandings', function () {
         const poolsTeamsPerformance = new Map([
             ['POOL A', poolA],
             ['POOL B', poolB],
-        ])
+        ]) as PoolTeamsPerformance
 
-        writeStandings(sStandings, poolsTeamsPerformance)
+        writeStandings(sStandings, 'A1:J')(poolsTeamsPerformance)
 
-        expect(expectedRange).toEqual("A1:J12")
+        expect(sStandings.getRange).toHaveBeenCalledWith("A1:J12")
 
-        expect(expectedVals).toEqual([
+        expect(range.setValues).toHaveBeenCalledWith([
             [ 'POOL A', '', '', '', '', '', '', '', '', '' ],
             [ 'Pos', 'Team', 'Pl', 'W',   'D',    'L', 'TF',  'TA',   'TD', 'Pts' ],
             [ 1, 'Team 2', 3, 2, 1, 0, 20, 5, 15, 9 ],

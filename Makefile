@@ -12,11 +12,15 @@ js_run_command:
 run_tests:
 	make js_run_command cmd='npm test'
 
+webpack:
+	make js_run_command cmd='npx webpack ${args}'
+
 clasp_login:
 	make clasp_run_command args='login'
 
-clasp_push:
+gas_push:
 	make run_tests
+	make webpack
 	make clasp_run_command cmd='push'
 
 setup:

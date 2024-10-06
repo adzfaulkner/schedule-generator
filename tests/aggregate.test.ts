@@ -1,70 +1,42 @@
-const rewire = require('rewire')
+import { describe, expect, it } from 'vitest'
 
-const sut = rewire('../Compute.js')
+import { aggregate } from '../src/aggregate'
 
-const Compute = sut.__get__('Compute')
-const handleRefAllocations = sut.__get__('handleRefAllocations')
+import type {Fixture, RefNames} from '../src/types'
 
-const values = [
-    ['12:15', 'AGP 1', 'POOL A', 'A', 1, 'B', 1, 'Ref 1', 'Ref 2' ],
-    ['12:15', 'AGP 2', 'POOL B', 'D', '2', 'E', '0', 'Ref 3', 'Ref 4' ],
-    ['12:45', 'AGP 1', 'POOL C', 'G', '10', 'H', '2', 'Ref 5', 'Ref 6' ],
-    ['12:45', 'AGP 2', 'POOL D', 'J', '', 'K', '', 'Ref 7', 'Ref 8' ],
-    ['13:15', 'AGP 1', 'POOL A', 'A', '2', 'C', '5', 'Ref 1', 'Ref 4' ],
-    ['13:15', 'AGP 2', 'POOL B', 'D', '', 'F', '', 'Ref 2', 'Ref 3' ],
-    ['13:45', 'AGP 1', 'POOL C', 'G', '', 'I', '', 'Ref 5', 'Ref 8' ],
-    ['13:45', 'AGP 2', 'POOL D', 'J', '', 'L', '', 'Ref 6', 'Ref 7' ],
-    ['14:15', 'AGP 1', 'POOL A', 'B', '', 'C', '', 'Ref 1', 'Ref 3' ],
-    ['14:15', 'AGP 2', 'POOL B', 'E', '', 'F', '', 'Ref 2', 'Ref 4' ],
-    ['14:45', 'AGP 1', 'POOL C', 'H', '', 'I', '', 'Ref 5', 'Ref 7' ],
-    ['14:45', 'AGP 2', 'POOL D', 'K', '', 'L', '', 'Ref 6', 'Ref 8' ],
-    ['15:15', 'AGP 1', 'BOWL', 'Bowl 1', '', 'Bowl 2', '', 'Ref 1', 'Ref 6' ],
-    ['15:15', 'AGP 2', 'BOWL', 'Bowl 3', '', 'Bowl 3', '', 'Ref 4', 'Ref 8' ],
-    ['15:45', 'AGP 1', 'PLATE', 'Plate 1', '', 'Plate 2', '', 'Ref 2', 'Ref 7' ],
-    ['15:45', 'AGP 2', 'PLATE', 'Plate 3', '', 'Plate 4', '', 'Ref 3', 'Ref 5' ],
-    ['16:15', 'AGP 1', 'CUP', 'Cup 1', '', 'Cup 2', '', 'Ref 1', 'Ref 8' ],
-    ['16:15', 'AGP 2', 'CUP', 'Cup 3', '', 'Cup 4', '', 'Ref 4', 'Ref 6' ],
-    ['16:45', 'AGP 1', 'BOWL', 'Bowl F', '', 'Bowl F', '', 'Ref 2', 'Ref 5' ],
-    ['16:45', 'AGP 2', 'BOWL', '11/12th PO', '', '11/12th PO', '', 'Ref 3', 'Ref 7' ],
-    ['17:15', 'AGP 1', 'PLATE', 'Plate F', '', 'Plate F', '', 'Ref 1', 'Ref 4' ],
-    ['17:15', 'AGP 2', 'PLATE', '7/8th PO', '', '7/8th PO', '', 'Ref 6', 'Ref 8' ],
-    ['17:45', 'AGP 1', 'CUP', 'Cup F', '', 'Cup F', '', 'Ref 2', 'Ref 3' ],
-    ['17:45', 'AGP 2', 'CUP', '3/4 PO', '', '3/4 PO', '', 'Ref 5', 'Ref 7' ],
-    [ '', '', '', '', '', '', '' ],
+const values: Fixture[] = [
+    ['12:15', 'AGP 1', 'POOL A', 'A', '1', 'B', '1', 'Ref 1', 'Ref 2', ''],
+    ['12:15', 'AGP 2', 'POOL B', 'D', '2', 'E', '0', 'Ref 3', 'Ref 4', ''],
+    ['12:45', 'AGP 1', 'POOL C', 'G', '10', 'H', '2', 'Ref 5', 'Ref 6', ''],
+    ['12:45', 'AGP 2', 'POOL D', 'J', '', 'K', '', 'Ref 7', 'Ref 8', ''],
+    ['13:15', 'AGP 1', 'POOL A', 'A', '2', 'C', '5', 'Ref 1', 'Ref 4', ''],
+    ['13:15', 'AGP 2', 'POOL B', 'D', '', 'F', '', 'Ref 2', 'Ref 3', ''],
+    ['13:45', 'AGP 1', 'POOL C', 'G', '', 'I', '', 'Ref 5', 'Ref 8', ''],
+    ['13:45', 'AGP 2', 'POOL D', 'J', '', 'L', '', 'Ref 6', 'Ref 7', ''],
+    ['14:15', 'AGP 1', 'POOL A', 'B', '', 'C', '', 'Ref 1', 'Ref 3', ''],
+    ['14:15', 'AGP 2', 'POOL B', 'E', '', 'F', '', 'Ref 2', 'Ref 4', ''],
+    ['14:45', 'AGP 1', 'POOL C', 'H', '', 'I', '', 'Ref 5', 'Ref 7', ''],
+    ['14:45', 'AGP 2', 'POOL D', 'K', '', 'L', '', 'Ref 6', 'Ref 8', ''],
+    ['15:15', 'AGP 1', 'BOWL', 'Bowl 1', '', 'Bowl 2', '', 'Ref 1', 'Ref 6', ''],
+    ['15:15', 'AGP 2', 'BOWL', 'Bowl 3', '', 'Bowl 3', '', 'Ref 4', 'Ref 8', ''],
+    ['15:45', 'AGP 1', 'PLATE', 'Plate 1', '', 'Plate 2', '', 'Ref 2', 'Ref 7', ''],
+    ['15:45', 'AGP 2', 'PLATE', 'Plate 3', '', 'Plate 4', '', 'Ref 3', 'Ref 5', ''],
+    ['16:15', 'AGP 1', 'CUP', 'Cup 1', '', 'Cup 2', '', 'Ref 1', 'Ref 8', ''],
+    ['16:15', 'AGP 2', 'CUP', 'Cup 3', '', 'Cup 4', '', 'Ref 4', 'Ref 6', ''],
+    ['16:45', 'AGP 1', 'BOWL', 'Bowl F', '', 'Bowl F', '', 'Ref 2', 'Ref 5', ''],
+    ['16:45', 'AGP 2', 'BOWL', '11/12th PO', '', '11/12th PO', '', 'Ref 3', 'Ref 7', ''],
+    ['17:15', 'AGP 1', 'PLATE', 'Plate F', '', 'Plate F', '', 'Ref 1', 'Ref 4', ''],
+    ['17:15', 'AGP 2', 'PLATE', '7/8th PO', '', '7/8th PO', '', 'Ref 6', 'Ref 8', ''],
+    ['17:45', 'AGP 1', 'CUP', 'Cup F', '', 'Cup F', '', 'Ref 2', 'Ref 3', ''],
+    ['17:45', 'AGP 2', 'CUP', '3/4 PO', '', '3/4 PO', '', 'Ref 5', 'Ref 7', ''],
+    [ '', '', '', '', '', '', '', '','', ''],
 ]
 
-const referees = [['Ref 1'], ['Ref 2'], ['Ref 3'], ['Ref 4'], ['Ref 5'], ['Ref 6'], ['Ref 7'], ['Ref 8']]
+const referees: RefNames = [['Ref 1'], ['Ref 2'], ['Ref 3'], ['Ref 4'], ['Ref 5'], ['Ref 6'], ['Ref 7'], ['Ref 8']]
 
-describe('handleRefAllocations', function () {
-    it('should ignore refs that are not in the list ie player refs', function () {
-        const refTally = new Map(referees.map(referee => [referee[0], 0]))
-        const refRefTally = new Map(referees.map(referee => [referee[0], new Map(refTally)]))
-
-        const refs = [
-            ...values[0],
-            'Invalid'
-        ]
-
-        handleRefAllocations(refRefTally, refTally, refs)
-
-        expect(Array.from(refTally.entries())).toEqual([
-            ['Ref 1', 1],
-            ['Ref 2', 1],
-            ['Ref 3', 0],
-            ['Ref 4', 0],
-            ['Ref 5', 0],
-            ['Ref 6', 0],
-            ['Ref 7', 0],
-            ['Ref 8', 0],
-        ])
-
-        expect(Array.from(refRefTally.keys())).toEqual(['Ref 1','Ref 2','Ref 3','Ref 4','Ref 5','Ref 6','Ref 7','Ref 8'])
-    })
-})
-
-describe('Compute', function () {
+describe('aggregate', function () {
     it('should produce what is expected', function () {
-        const { poolsTeamsPerformance, refRefTally, refTally, pitches, times, fixturesByPitchAndTime } = Compute(values, referees)
+        const { poolsTeamsPerformance, refRefTally, refTally, pitches, times, fixturesByPitchAndTime } = aggregate(values, referees)
 
         expect(Array.from(poolsTeamsPerformance.keys())).toEqual(['POOL A', 'POOL B', 'POOL C', 'POOL D'])
 

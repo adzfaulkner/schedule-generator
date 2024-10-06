@@ -1,4 +1,7 @@
 **/node_modules/**
 **/root/**
 **/tests/**
+**/src/**
 jest.config.js
+Compute.js
+webpack.config.js
