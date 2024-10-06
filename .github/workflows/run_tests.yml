@@ -18,9 +18,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }}
+      - uses: actions/checkout@v2
       - name: Pull docker images
         run: make docker_pull_image
-      - uses: actions/checkout@v2
       - name: Setup
         run: make setup
       - name: Run tests
