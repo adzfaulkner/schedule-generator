@@ -3,13 +3,12 @@ name: RunTests
 on:
   push:
     branches:
-      - 'feature/**'
-      - 'task/**'
       - 'main'
 
 jobs:
-  RunTests:
-    name: Run Tests
+  ClaspPush:
+    name: Clasp Push
+    on: RunTests
     runs-on: ubuntu-latest
     steps:
       - name: Login to GitHub Container Registry
@@ -21,5 +20,5 @@ jobs:
       - uses: actions/checkout@v2
       - name: Pull docker images
         run: make docker_pull_image
-      - name: Run tests
-        run: make ci_run_tests
+      - name: Transpile and clasp push
+        run: make ci_clasp_push

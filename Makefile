@@ -35,3 +35,11 @@ docker_build_tag_push:
 docker_pull_image:
 	docker pull ghcr.io/adzfaulkner/${IMAGE_TAG_JS}:latest
 	docker tag ghcr.io/adzfaulkner/${IMAGE_TAG_JS}:latest ${IMAGE_TAG_JS}:latest
+
+ci_run_tests:
+	make js_run_command cmd='npm install'
+	make run_tests
+
+ci_clasp_push:
+	make webpack
+	make clasp_run_command cmd='push'
