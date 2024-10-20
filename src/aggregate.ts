@@ -25,6 +25,8 @@ type Return = {
 export const aggregate = (fixtures: Fixture[], referees: RefNames): Return => {
     const poolsTeamsPerformance: PoolTeamsPerformance = new Map()
 
+    referees = referees.filter(referee => referee[0] !== "")
+
     const refTally: RefSum = new Map(referees.map(referee => [referee[0], 0]))
     const refRefTally: RefRefSum = new Map(referees.map(referee => [referee[0], new Map(refTally)]))
 

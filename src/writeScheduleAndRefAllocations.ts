@@ -1,6 +1,7 @@
-import type { Fixture, FixturesByPitchAndTime, Pitch, Pitches, Time, Times } from './types'
-
 import { columnToLetter } from './columnToLetter'
+import { setValues } from './gas_wrappers'
+
+import type { Fixture, FixturesByPitchAndTime, Pitch, Pitches, Time, Times } from './types'
 
 type HandleTime = (time: Time) => void
 type HandlePitch = (pitch: Pitch) => void
@@ -96,7 +97,7 @@ export const writeSchedule = (
     const handleNoFixture = ((sheet: GoogleAppsScript.Spreadsheet.Sheet, generateRange: Function, coords: Coords) => (time: Time): void => {
         const timeCellValue = coords.col === 1 ? time : ''
 
-        sheet.getRange(generateRange()).setValues([
+        setValues(sheet, generateRange(), [
             [timeCellValue, ''],
             ['', ''],
             ['', ''],
@@ -108,7 +109,7 @@ export const writeSchedule = (
 
         const timeCellValue = coords.col === 1 ? time : ''
 
-        sheet.getRange(generateRange()).setValues([
+        setValues(sheet, generateRange(), [
             [timeCellValue, stage],
             ['', home],
             ['', away],
@@ -122,8 +123,8 @@ export const writeSchedule = (
     ) => (): void => {
         const writeFrom = 1
 
-        sheet.getRange(`${writeFrom}:${writeFrom}`).setValues([['', ...pitchLine]])
-        sheet.getRange(`${writeFromRow}:${writeFromRow}`).setValues([['TIME', ...pitchLine]])
+        setValues(sheet, `${writeFrom}:${writeFrom}`, [['', ...pitchLine]])
+        setValues(sheet, `${writeFromRow}:${writeFromRow}`, [['TIME', ...pitchLine]])
     })(sheet, pitchLine, writeFromRow)
 
     return {
@@ -152,7 +153,7 @@ export const writeRefAllocations = (
             return
         }
 
-        sheet.getRange(`${coords.row}:${coords.row}`).setValues([[...fixtureLine]])
+        setValues(sheet, `${coords.row}:${coords.row}`, [[...fixtureLine]])
         coords.row += 4
     })(fixtureLine, coords)
 
@@ -194,7 +195,7 @@ export const writeRefAllocations = (
     ) => (): void => {
         writeSheet()
 
-        sheet.getRange(`${writeFromRow}:${writeFromRow}`).setValues([pitchLine])
+        setValues(sheet, `${writeFromRow}:${writeFromRow}`, [pitchLine])
     })(sheet, pitchLine, writeSheet, writeFromRow)
 
     return {

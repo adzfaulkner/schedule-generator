@@ -1,4 +1,4 @@
-import { ranges } from './config'
+import { setValues } from './gas_wrappers'
 
 import type { RefRefSum, RefSum } from './types'
 
@@ -19,5 +19,5 @@ export const writeRefCrossTable = (
         ])
     })
 
-    sRefCrosstable.getRange(writeRange).setValues(lines)
+    setValues(sRefCrosstable, writeRange, lines)
 }

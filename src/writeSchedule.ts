@@ -1,4 +1,5 @@
 import { columnToLetter } from './columnToLetter'
+import { setValues } from './gas_wrappers'
 
 import type { FixturesByPitchAndTime, Pitches, Times } from './types'
 
@@ -24,7 +25,7 @@ export const writeSchedule = (
             !fixturesByPitchAndTime.has(pitch)
             || !fixturesByPitchAndTime.get(pitch).has(time)
         ) {
-            sSchedule.getRange(range).setValues([
+            setValues(sSchedule, range, [
                 [timeCellValue, ''],
                 ['', ''],
                 ['', ''],
@@ -35,7 +36,7 @@ export const writeSchedule = (
 
         const [,,stage,home,,away] = fixturesByPitchAndTime.get(pitch).get(time)
 
-        sSchedule.getRange(range).setValues([
+        setValues(sSchedule, range, [
             [timeCellValue, stage],
             ['', home],
             ['', away],
@@ -63,10 +64,10 @@ export const writeSchedule = (
     writeFrom = 1
 
     range = `${writeFrom}:${writeFrom}`
-    sSchedule.getRange(range).setValues([['', ...pitchLine]])
+    setValues(sSchedule, range, [['', ...pitchLine]])
 
     writeFrom = writeFromRow
 
     range = `${writeFrom}:${writeFrom}`
-    sSchedule.getRange(range).setValues([['TIME', ...pitchLine]])
+    setValues(sSchedule, range, [['TIME', ...pitchLine]])
 }

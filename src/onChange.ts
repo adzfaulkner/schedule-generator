@@ -4,17 +4,19 @@ import {
     SCHEDULE_WRITE_FROM_ROW,
     REF_ALLOCS_WRITE_FROM
 } from './config'
+import { getRange } from './gas_wrappers'
 import { writeRefCrossTable } from './writeRefCrosstable'
 import { writeStandings } from './writeStandings'
 import { writeScheduleAndRefAllocations, writeSchedule, writeRefAllocations } from './writeScheduleAndRefAllocations'
 
 import type { Fixture, RefNames } from './types'
+import URLFetchRequestOptions = GoogleAppsScript.URL_Fetch.URLFetchRequestOptions;
 
-function onChange(e) {
+export function onChange(e) {
     const ss: GoogleAppsScript.Spreadsheet.Spreadsheet = SpreadsheetApp.getActive()
     const active = ss.getActiveSheet()
 
-    if (!['Raw', 'Ref Allocations', 'Ref Crosstable'].includes(active.getName())) {
+    if (!['Schedule', 'Ref Allocations', 'Ref Crosstable'].includes(active.getName())) {
         return
     }
 
@@ -23,9 +25,8 @@ function onChange(e) {
     const sRefCrosstable = ss.getSheetByName('Ref Crosstable')
     const sStandings = ss.getSheetByName('Standings')
     const sSchedule = ss.getSheetByName('Schedule')
-
-    const fixtureValues: Fixture[] = sRaw.getRange(ranges.fixture).getValues() as Fixture[]
-    const refereeValues: RefNames = sRefCrosstable.getRange(ranges.refNames).getValues() as RefNames
+    const fixtureValues: Fixture[] = getRange(sRaw, ranges.fixture).getValues() as Fixture[]
+    const refereeValues: RefNames = getRange(sRefCrosstable, ranges.refNames).getValues() as RefNames
 
     const { poolsTeamsPerformance, refRefTally, refTally, fixturesByPitchAndTime, pitches, times } = aggregate(fixtureValues, refereeValues)
 
@@ -36,6 +37,13 @@ function onChange(e) {
         writeRefAllocations(sRefAllocs, REF_ALLOCS_WRITE_FROM),
         writeSchedule(sSchedule, SCHEDULE_WRITE_FROM_ROW)
     )(fixturesByPitchAndTime, pitches, times)
-}
 
-global.onChange = onChange
+    const options: URLFetchRequestOptions = {
+        'method': 'put',
+        'payload': JSON.stringify({
+            spreadsheetId: ss.getId(),
+        }),
+    }
+
+    UrlFetchApp.fetch('https://e5ufi5onrd.execute-api.eu-west-2.amazonaws.com/prod/update', options)
+}

@@ -1,7 +1,7 @@
 const GasPlugin = require("gas-webpack-plugin");
 
 module.exports = {
-    entry: './src/onChange.ts',
+    entry: './src/index.ts',
     mode: 'development',
     output: {
         filename: 'Code.js',

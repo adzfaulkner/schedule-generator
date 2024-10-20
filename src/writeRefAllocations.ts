@@ -1,3 +1,5 @@
+import { setValues } from './gas_wrappers'
+
 import { FixturesByPitchAndTime, Pitches, Times } from './types'
 
 export const writeRefAllocations = (
@@ -19,7 +21,7 @@ export const writeRefAllocations = (
     }
 
     const range = `${writeFrom}:${writeFrom}`
-    sRefAllocs.getRange(range).setValues([line])
+    setValues(sRefAllocs, range, [line])
 
     writeFrom++
 
@@ -42,7 +44,7 @@ export const writeRefAllocations = (
             line.push('')
         }
 
-        sRefAllocs.getRange(`${writeFrom}:${writeFrom}`).setValues([line])
+        setValues(sRefAllocs, `${writeFrom}:${writeFrom}`, [line])
 
         writeFrom += 4
     }

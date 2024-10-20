@@ -1,9 +1,9 @@
+import { setValues } from './gas_wrappers'
 import { sortPositions } from './sortPositions'
 
-import type { PoolTeamsPerformance } from './types'
-import { PoolTeamsPerformanceAfterSort, Team } from "./types";
+import type { PoolTeamsPerformance, PoolTeamsPerformanceAfterSort, Team } from './types'
 
-const STANDING_HEADER = ['Pos', 'Team', 'Pl', 'W', 'D', 'L', 'TF', 'TA', 'TD', 'Pts']
+const STANDING_HEADER = ['Pos', 'Team', 'PL', 'W', 'D', 'L', 'TF', 'TA', 'TD', 'Pts']
 
 export const writeStandings = (
     sStandings: GoogleAppsScript.Spreadsheet.Sheet,
@@ -41,5 +41,5 @@ export const writeStandings = (
         }
     })
 
-    sStandings.getRange(`${range}${lines.length}`).setValues(lines)
+    setValues(sStandings, `${range}${lines.length}`, lines)
 }
