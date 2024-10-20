@@ -4,7 +4,7 @@ build:
 	docker build --tag ${IMAGE_TAG_JS} .
 
 clasp_run_command:
-	docker run -it -v ${PWD}:/app -v ${PWD}/root:/root ${IMAGE_TAG_JS} clasp ${cmd}
+	docker run -v ${PWD}:/app -v ${PWD}/root:/root ${IMAGE_TAG_JS} clasp ${cmd}
 
 js_run_command:
 	docker run -v ${PWD}:/app ${IMAGE_TAG_JS} ${cmd}
