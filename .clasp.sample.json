@@ -1,4 +1,4 @@
 {
-  "scriptId": "copy and paste from the app script project",
+  "scriptId": "$SCRIPT_ID",
   "rootDir": "/app"
 }
