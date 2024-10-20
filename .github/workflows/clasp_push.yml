@@ -6,9 +6,13 @@ on:
       - 'main'
 
 jobs:
+  RunTests:
+    uses: adzfaulkner/schedule-generator/.github/workflows/run_tests.yml@main
+    secrets:
+      CR_PAT: ${{ secrets.CR_PAT }}
   ClaspPush:
     name: Clasp Push
-    on: RunTests
+    needs: RunTests
     runs-on: ubuntu-latest
     steps:
       - name: Login to GitHub Container Registry

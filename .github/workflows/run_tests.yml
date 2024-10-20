@@ -1,11 +1,10 @@
-name: RunTests
+name: Reusable workflow example
 
 on:
-  push:
-    branches:
-      - 'feature/**'
-      - 'task/**'
-      - 'main'
+  workflow_call:
+    secrets:
+      CR_PAT:
+        required: true
 
 jobs:
   RunTests:
