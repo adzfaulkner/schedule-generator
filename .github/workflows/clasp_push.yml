@@ -6,10 +6,6 @@ on:
       - 'main'
 
 jobs:
-  RunTests:
-    uses: adzfaulkner/schedule-generator/.github/workflows/run_tests.yml@main
-    secrets:
-      CR_PAT: ${{ secrets.CR_PAT }}
   ClaspPush:
     name: Clasp Push
     needs: RunTests
@@ -28,5 +24,7 @@ jobs:
         run: mkdir root && echo "$CLASP_JSON" > root/.clasprc.json
         env:
           CLASP_JSON: ${{ secrets.CLASP_JSON }}
+      - name: Deps install
+        run: make npm_install
       - name: Transpile and clasp push
-        run: make ci_clasp_push
+        run: make gas_push
