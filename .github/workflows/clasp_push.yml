@@ -8,7 +8,6 @@ on:
 jobs:
   ClaspPush:
     name: Clasp Push
-    needs: RunTests
     runs-on: ubuntu-latest
     steps:
       - name: Login to GitHub Container Registry
