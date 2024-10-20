@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "Compute.js",
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run",
+    "build_Push": "webpack && clasp push"
   },
   "author": "",
   "license": "ISC",

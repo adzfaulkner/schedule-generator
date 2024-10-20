@@ -1,4 +1,4 @@
-name: RunTests
+name: Clasp Push
 
 on:
   push:
