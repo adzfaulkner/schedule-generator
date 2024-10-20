@@ -25,6 +25,7 @@ jobs:
           echo "$CLASP_JSON" > root/.clasprc.json
           cp .clasp.sample.json .clasp.json
           envsubst < .clasp.json
+          cat .clasp.json
         env:
           CLASP_JSON: ${{ secrets.CLASP_JSON }}
           SCRIPT_ID: ${{ secrets.SCRIPT_ID }}
