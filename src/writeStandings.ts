@@ -13,7 +13,9 @@ export const writeStandings = (
 ) => {
     const lines: any[] = []
 
-    poolsTeamsPerformance.forEach((teamsPerformance, pool) => {
+    Array.from(poolsTeamsPerformance.keys()).sort().forEach((pool: string) => {
+        const teamsPerformance = poolsTeamsPerformance.get(pool)
+
         lines.push([
             pool,
             '',

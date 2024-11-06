@@ -29,8 +29,8 @@ describe('writeStandings', function () {
         ])
 
         const poolsTeamsPerformance = new Map([
-            ['POOL A', poolA],
             ['POOL B', poolB],
+            ['POOL A', poolA],
         ]) as PoolTeamsPerformance
 
         writeStandings(sStandings, 'A1:J')(poolsTeamsPerformance)

@@ -28,7 +28,14 @@ export function onChange(e) {
     const fixtureValues: Fixture[] = getRange(sRaw, ranges.fixture).getValues() as Fixture[]
     const refereeValues: RefNames = getRange(sRefCrosstable, ranges.refNames).getValues() as RefNames
 
-    const { poolsTeamsPerformance, refRefTally, refTally, fixturesByPitchAndTime, pitches, times } = aggregate(fixtureValues, refereeValues)
+    const {
+        poolsTeamsPerformance,
+        refRefTally,
+        refTally,
+        fixturesByPitchAndTime,
+        pitches,
+        times
+    } = aggregate(fixtureValues, refereeValues)
 
     writeRefCrossTable(sRefCrosstable, ranges.refRefTally)(refRefTally, refTally)
     writeStandings(sStandings, ranges.standings)(poolsTeamsPerformance)
