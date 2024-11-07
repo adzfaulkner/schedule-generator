@@ -16,7 +16,7 @@ export function onChange(e) {
     const ss: GoogleAppsScript.Spreadsheet.Spreadsheet = SpreadsheetApp.getActive()
     const active = ss.getActiveSheet()
 
-    if (!['Raw', 'Ref Allocations', 'Ref Crosstable'].includes(active.getName())) {
+    if (!['Schedule', 'Ref Allocations', 'Ref Crosstable'].includes(active.getName())) {
         return
     }
 
