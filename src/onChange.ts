@@ -17,7 +17,7 @@ export function onChange(e) {
     const active = ss.getActiveSheet()
 
     if (!['Raw', 'Ref Allocations', 'Ref Crosstable'].includes(active.getName())) {
-        return
+        //return
     }
 
     const sRaw = ss.getSheetByName('Raw')
