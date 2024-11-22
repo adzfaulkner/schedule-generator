@@ -2,7 +2,7 @@ export const getRange = (sheet: GoogleAppsScript.Spreadsheet.Sheet, range: strin
     try {
         return sheet.getRange(range)
     } catch (e) {
-        throw Error(`error whilst fetch sheet ${sheet.getName()} range ${range}`)
+        throw Error(`error: ${e.name}: ${e.message} whilst fetch sheet ${sheet.getName()} range ${range}`)
     }
 }
 
@@ -12,6 +12,6 @@ export const setValues = ((getRange: Function) => (sheet: GoogleAppsScript.Sprea
     try {
         r.setValues(values)
     } catch (e) {
-        throw Error(`error whilst set values sheet ${sheet.getName()} range ${range}`)
+        throw Error(`error: ${e.name}: ${e.message} whilst set values sheet ${sheet.getName()} range ${range}`)
     }
 })(getRange)
