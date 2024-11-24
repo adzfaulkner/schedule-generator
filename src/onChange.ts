@@ -11,7 +11,6 @@ import { writeScheduleAndRefAllocations, writeSchedule, writeRefAllocations } fr
 
 import type { Fixture, RefNames } from './types'
 import URLFetchRequestOptions = GoogleAppsScript.URL_Fetch.URLFetchRequestOptions
-import * as console from "node:console";
 
 function getRefNames(refCrosstable: GoogleAppsScript.Spreadsheet.Sheet): RefNames {
     const refNames: RefNames = []
