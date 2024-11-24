@@ -25,8 +25,8 @@ type Return = {
 export const aggregate = (fixtures: Fixture[], referees: RefNames): Return => {
     const poolsTeamsPerformance: PoolTeamsPerformance = new Map()
 
-    const refTally: RefSum = new Map(referees.map(referee => [referee[0], 0]))
-    const refRefTally: RefRefSum = new Map(referees.map(referee => [referee[0], new Map(refTally)]))
+    const refTally: RefSum = new Map(referees.map(referee => [referee, 0]))
+    const refRefTally: RefRefSum = new Map(referees.map(referee => [referee, new Map(refTally)]))
 
     const pitches: Pitches= new Set()
     const times: Times = new Set()

@@ -7,12 +7,12 @@ import {Fixture} from "../src/types";
 
 const fixture: Fixture = ['12:15', 'AGP 1', 'POOL A', 'A', '1', 'B', '1', 'Ref 1', 'Ref 2', '']
 
-const referees: RefNames = [['Ref 1'], ['Ref 2'], ['Ref 3'], ['Ref 4'], ['Ref 5'], ['Ref 6'], ['Ref 7'], ['Ref 8']]
+const referees: RefNames = ['Ref 1', 'Ref 2', 'Ref 3', 'Ref 4', 'Ref 5', 'Ref 6', 'Ref 7', 'Ref 8']
 
 describe('handleRefAllocations', function () {
     it('should ignore refs that are not in the list ie player refs', function () {
-        const refTally = new Map(referees.map(referee => [referee[0], 0]))
-        const refRefTally = new Map(referees.map(referee => [referee[0], new Map(refTally)]))
+        const refTally = new Map(referees.map(referee => [referee, 0]))
+        const refRefTally = new Map(referees.map(referee => [referee, new Map(refTally)]))
 
         fixture[fixture.length - 1] = 'Invalid'
 

@@ -21,7 +21,7 @@ export const writeRefCrossTable = (
 
     console.log(columnToLetter(lines[0].length + 4), lines.length)
 
-    const writeRange = `D2:${columnToLetter(lines[0].length + 4)}${lines.length+1}`
+    const writeRange = `D2:${columnToLetter(lines[0].length + 3)}${lines.length+1}`
 
     console.log(writeRange)
 

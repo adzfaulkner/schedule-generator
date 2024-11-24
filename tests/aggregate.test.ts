@@ -32,7 +32,7 @@ const values: Fixture[] = [
     [ '', '', '', '', '', '', '', '','', ''],
 ]
 
-const referees: RefNames = [['Ref 1'], ['Ref 2'], ['Ref 3'], ['Ref 4'], ['Ref 5'], ['Ref 6'], ['Ref 7'], ['Ref 8']]
+const referees: RefNames = ['Ref 1', 'Ref 2', 'Ref 3', 'Ref 4', 'Ref 5', 'Ref 6', 'Ref 7', 'Ref 8']
 
 describe('aggregate', function () {
     it('should produce what is expected', function () {

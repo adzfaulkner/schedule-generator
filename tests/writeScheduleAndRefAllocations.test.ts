@@ -22,7 +22,7 @@ const fixtures: Fixture[] = [
     ['15:15', 'AGP 3', 'POOL B', 'E', '', 'F', '', 'Ref 2', 'Ref 4', ''],
 ]
 
-const referees: RefNames = [['Ref 1'], ['Ref 2'], ['Ref 3'], ['Ref 4'], ['Ref 5'], ['Ref 6'], ['Ref 7'], ['Ref 8']]
+const referees: RefNames = ['Ref 1', 'Ref 2', 'Ref 3', 'Ref 4', 'Ref 5', 'Ref 6', 'Ref 7', 'Ref 8']
 
 describe('writeScheduleAndRefAllocations', function () {
     it('produces what is expected', function () {
