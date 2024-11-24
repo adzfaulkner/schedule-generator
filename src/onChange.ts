@@ -13,7 +13,7 @@ import type { Fixture, RefNames } from './types'
 import URLFetchRequestOptions = GoogleAppsScript.URL_Fetch.URLFetchRequestOptions
 import * as console from "node:console";
 
-const getRefNames = (refCrosstable: GoogleAppsScript.Spreadsheet.Sheet): RefNames => {
+function getRefNames(refCrosstable: GoogleAppsScript.Spreadsheet.Sheet): RefNames {
     const refNames: RefNames = []
     let refName: string = ''
 
