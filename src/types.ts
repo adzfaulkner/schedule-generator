@@ -4,7 +4,7 @@ type Stage = string
 export type Team = string
 type Score = string
 type Ref = string
-export type RefNames = [Ref][]
+export type RefNames = Ref[]
 export type Fixture = [Time, Pitch, Stage, Team, Score, Team, Score, Ref, Ref, Ref]
 
 export type FixturesByPitchAndTime = Map<Pitch, Map<Time, Fixture>>

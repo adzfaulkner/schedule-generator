@@ -1,10 +1,10 @@
+import { columnToLetter } from './columnToLetter'
 import { setValues } from './gas_wrappers'
 
 import type { RefRefSum, RefSum } from './types'
 
 export const writeRefCrossTable = (
-    sRefCrosstable: GoogleAppsScript.Spreadsheet.Sheet,
-    writeRange: string,
+    sRefCrosstable: GoogleAppsScript.Spreadsheet.Sheet
 ) => (
     refRefTally: RefRefSum,
     refTally: RefSum
@@ -18,6 +18,12 @@ export const writeRefCrossTable = (
             refTally.get(key)
         ])
     })
+
+    console.log(columnToLetter(lines[0].length + 4), lines.length)
+
+    const writeRange = `D2:${columnToLetter(lines[0].length + 4)}${lines.length+1}`
+
+    console.log(writeRange)
 
     setValues(sRefCrosstable, writeRange, lines)
 }

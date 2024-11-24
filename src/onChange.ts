@@ -24,7 +24,7 @@ function getRefNames(refCrosstable: GoogleAppsScript.Spreadsheet.Sheet): RefName
             break
         }
 
-        refNames.push([refName])
+        refNames.push(refName)
         row++
     }
 
@@ -58,7 +58,7 @@ export function onChange() {
         times
     } = aggregate(fixtureValues, refereeValues)
 
-    writeRefCrossTable(sRefCrosstable, ranges.refRefTally)(refRefTally, refTally)
+    writeRefCrossTable(sRefCrosstable)(refRefTally, refTally)
     writeStandings(sStandings, ranges.standings)(poolsTeamsPerformance)
 
     writeScheduleAndRefAllocations(
