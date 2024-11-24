@@ -32,7 +32,7 @@ const getRefNames = (refCrosstable: GoogleAppsScript.Spreadsheet.Sheet): RefName
     return refNames
 }
 
-export function onChange(e) {
+export function onChange() {
     const ss: GoogleAppsScript.Spreadsheet.Spreadsheet = SpreadsheetApp.getActive()
     const active = ss.getActiveSheet()
 
