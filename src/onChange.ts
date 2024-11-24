@@ -10,7 +10,27 @@ import { writeStandings } from './writeStandings'
 import { writeScheduleAndRefAllocations, writeSchedule, writeRefAllocations } from './writeScheduleAndRefAllocations'
 
 import type { Fixture, RefNames } from './types'
-import URLFetchRequestOptions = GoogleAppsScript.URL_Fetch.URLFetchRequestOptions;
+import URLFetchRequestOptions = GoogleAppsScript.URL_Fetch.URLFetchRequestOptions
+import * as console from "node:console";
+
+const getRefNames = (refCrosstable: GoogleAppsScript.Spreadsheet.Sheet): RefNames => {
+    const refNames: RefNames = []
+    let refName: string = ''
+
+    let row = 2
+    while (true) {
+        refName = getRange(refCrosstable, `A${row}`).getValue()
+
+        if (refName === '') {
+            break
+        }
+
+        refNames.push([refName])
+        row++
+    }
+
+    return refNames
+}
 
 export function onChange(e) {
     const ss: GoogleAppsScript.Spreadsheet.Spreadsheet = SpreadsheetApp.getActive()
@@ -26,7 +46,9 @@ export function onChange(e) {
     const sStandings = ss.getSheetByName('Standings')
     const sSchedule = ss.getSheetByName('Schedule')
     const fixtureValues: Fixture[] = getRange(sRaw, ranges.fixture).getValues() as Fixture[]
-    const refereeValues: RefNames = getRange(sRefCrosstable, ranges.refNames).getValues() as RefNames
+    const refereeValues = getRefNames(sRefCrosstable)
+
+    console.log(refereeValues)
 
     const {
         poolsTeamsPerformance,
