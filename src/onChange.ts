@@ -6,7 +6,7 @@ import {
 } from './config'
 import { getRange } from './gas_wrappers'
 import { writeRefCrossTable } from './writeRefCrosstable'
-import { writeStandings } from './writeStandings'
+import { writeStandings, combinedPools } from './writeStandings'
 import { writeScheduleAndRefAllocations, writeSchedule, writeRefAllocations } from './writeScheduleAndRefAllocations'
 
 import type { Fixture, RefNames } from './types'
@@ -47,8 +47,6 @@ export function onChange() {
     const fixtureValues: Fixture[] = getRange(sRaw, ranges.fixture).getValues() as Fixture[]
     const refereeValues = getRefNames(sRefCrosstable)
 
-    console.log(refereeValues)
-
     const {
         poolsTeamsPerformance,
         refRefTally,
@@ -59,7 +57,7 @@ export function onChange() {
     } = aggregate(fixtureValues, refereeValues)
 
     writeRefCrossTable(sRefCrosstable)(refRefTally, refTally)
-    writeStandings(sStandings, ranges.standings)(poolsTeamsPerformance)
+    writeStandings(sStandings, ranges.standings)(combinedPools(poolsTeamsPerformance))
 
     writeScheduleAndRefAllocations(
         writeRefAllocations(sRefAllocs, REF_ALLOCS_WRITE_FROM),
