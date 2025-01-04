@@ -1,4 +1,5 @@
 import { ranges, PREVIOUS_SCHEDULE_IDS } from './config'
+import * as console from "node:console";
 
 const aliases = new Map([
     ['London Eagles', 'London Eagles Green']
@@ -17,6 +18,10 @@ export const writeOverallStandings = (): void => {
         standings.getValues().forEach(v => {
             let [,team,pts] = v
 
+            if (team === '') {
+                return
+            }
+
             if (aliases.has(team)) {
                 team = aliases.get(team)
             }
@@ -30,6 +35,20 @@ export const writeOverallStandings = (): void => {
     })
 
     const overall = Array.from(perf)
+
+    overall.sort((a: [string, number], b: [string, number]): number => {
+        const [ateam, apts] = a
+        const [bteam, bpts] = b
+
+        if (apts < bpts) {
+            return 1
+        } else if (apts > bpts) {
+            return -1
+        }
+
+        // absolute default is to sort by team name
+        return ( ( ateam === bteam ) ? 0 : ( ( ateam > bteam ) ? 1 : -1 ) )
+    })
 
     console.log(overall)
 }
