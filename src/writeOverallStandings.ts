@@ -1,5 +1,4 @@
 import { ranges, PREVIOUS_SCHEDULE_IDS } from './config'
-import * as console from "node:console";
 
 const aliases = new Map([
     ['London Eagles', 'London Eagles Green']
