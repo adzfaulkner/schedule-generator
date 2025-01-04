@@ -5,6 +5,7 @@ import {
     REF_ALLOCS_WRITE_FROM
 } from './config'
 import { getRange } from './gas_wrappers'
+import { writeOverallStandings } from './writeOverallStandings'
 import { writeRefCrossTable } from './writeRefCrosstable'
 import { writeStandings, combinedPools } from './writeStandings'
 import { writeScheduleAndRefAllocations, writeSchedule, writeRefAllocations } from './writeScheduleAndRefAllocations'
@@ -72,4 +73,6 @@ export function onChange() {
     }
 
     UrlFetchApp.fetch('https://e5ufi5onrd.execute-api.eu-west-2.amazonaws.com/prod/update', options)
+
+    writeOverallStandings()
 }

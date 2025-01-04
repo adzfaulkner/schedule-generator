@@ -50,7 +50,7 @@ export const combinedPools = (
 ): GenerateLines => (): any[] => {
     const lines: any[] = [
         [
-            'Combined Standings',
+            'Pool Standings',
             '',
             '',
             '',

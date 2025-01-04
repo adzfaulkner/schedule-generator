@@ -1,4 +1,4 @@
-import type {Fixture, Team, Time} from './types'
+import type { Fixture, Team, Time } from './types'
 
 export function teamCrossTable(teams: Team[][], fixtures: Fixture[], times: Time[][]): string[][] {
     const teamsM: Team[] = teams.map((l: Team[]) => l[0])

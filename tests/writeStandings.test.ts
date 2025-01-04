@@ -65,7 +65,7 @@ describe('writeStandings', function () {
         expect(sStandings.getRange).toHaveBeenCalledWith("A1:J10")
 
         expect(range.setValues).toHaveBeenCalledWith([
-            [ 'Combined Standings', '', '', '', '', '', '', '', '', '' ],
+            [ 'Pool Standings', '', '', '', '', '', '', '', '', '' ],
             [ 'Pos', 'Team', 'PL', 'W',   'D',    'L', 'TF',  'TA',   'TD', 'Pts' ],
             [ 1, 'Team 2', 3, 2, 1, 0, 20, 5, 15, 9 ],
             [ 2, 'Team 7', 3, 1, 2, 0, 15, 12, 3, 6 ],
