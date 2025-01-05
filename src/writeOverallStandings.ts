@@ -9,8 +9,9 @@ export const writeOverallStandings = (
     previousFinalStandings: any[][]
 ): void => {
     const perf: Map<string, number> = new Map()
+    const standings = [...finalStandings, ...previousFinalStandings]
 
-    previousFinalStandings.forEach(([,team,pts]) => {
+    standings.forEach(([,team,pts]) => {
         if (team === '') {
             return
         }
@@ -42,5 +43,10 @@ export const writeOverallStandings = (
         return ( ( ateam === bteam ) ? 0 : ( ( ateam > bteam ) ? 1 : -1 ) )
     })
 
-    console.log(overall, finalStandings)
+    let pos = 1
+    overall.forEach(([team, pts]) => {
+        sSeriesStandings.getRange(`A${pos+1}:C${pos+1}`)
+            .setValues([[pos, team, pts]])
+        pos++
+    })
 }
