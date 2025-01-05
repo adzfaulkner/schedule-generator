@@ -2,7 +2,8 @@ import { aggregate } from './aggregate'
 import {
     ranges,
     SCHEDULE_WRITE_FROM_ROW,
-    REF_ALLOCS_WRITE_FROM
+    REF_ALLOCS_WRITE_FROM,
+    PREVIOUS_SCHEDULE_IDS,
 } from './config'
 import { getRange } from './gas_wrappers'
 import { writeOverallStandings } from './writeOverallStandings'
@@ -45,6 +46,16 @@ export function onChange() {
     const sRefCrosstable = ss.getSheetByName('Ref Crosstable')
     const sStandings = ss.getSheetByName('Standings')
     const sSchedule = ss.getSheetByName('Schedule')
+    const sFinalStandings = ss.getSheetByName('Final Standings')
+    const sSeriesStandings = ss.getSheetByName('Series Standings')
+
+    const previousFinalStandings = PREVIOUS_SCHEDULE_IDS.map(id => {
+        const s = SpreadsheetApp.openById(id)
+        return s.getSheetByName('Final Standings')
+            .getRange(ranges.finalStanding)
+            .getValues()
+    }).flat()
+
     const fixtureValues: Fixture[] = getRange(sRaw, ranges.fixture).getValues() as Fixture[]
     const refereeValues = getRefNames(sRefCrosstable)
 
@@ -74,5 +85,9 @@ export function onChange() {
 
     UrlFetchApp.fetch('https://e5ufi5onrd.execute-api.eu-west-2.amazonaws.com/prod/update', options)
 
-    writeOverallStandings()
+    writeOverallStandings(
+        sFinalStandings.getRange(ranges.finalStanding).getValues(),
+        sSeriesStandings,
+        previousFinalStandings
+    )
 }

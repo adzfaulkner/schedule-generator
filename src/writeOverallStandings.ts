@@ -1,36 +1,31 @@
 import { ranges, PREVIOUS_SCHEDULE_IDS } from './config'
 
 const aliases = new Map([
-    ['London Eagles', 'London Eagles Green']
+    ['London Eagles', 'London Eagles Green'],
+    ['London Scorpions', 'London Scorpions Gurus']
 ])
 
-export const writeOverallStandings = (): void => {
-    //const ss: GoogleAppsScript.Spreadsheet.Spreadsheet = SpreadsheetApp.getActive()
-
+export const writeOverallStandings = (
+    sFinalStandings: any[][],
+    sSeriesStandings: GoogleAppsScript.Spreadsheet.Sheet,
+    previousFinalStandings: any[][]
+): void => {
     const perf: Map<string, number> = new Map()
 
-    PREVIOUS_SCHEDULE_IDS.forEach(id => {
-        const s = SpreadsheetApp.openById(id)
-        const standings = s.getSheetByName('Final Standings')
-            .getRange(ranges.finalStanding)
+    previousFinalStandings.forEach(([,team,pts]) => {
+        if (team === '') {
+            return
+        }
 
-        standings.getValues().forEach(v => {
-            let [,team,pts] = v
+        if (aliases.has(team)) {
+            team = aliases.get(team)
+        }
 
-            if (team === '') {
-                return
-            }
+        if (!perf.has(team)) {
+            perf.set(team, 0)
+        }
 
-            if (aliases.has(team)) {
-                team = aliases.get(team)
-            }
-
-            if (!perf.has(team)) {
-                perf.set(team, 0)
-            }
-
-            perf.set(team, perf.get(team) + parseInt(pts, 10))
-        })
+        perf.set(team, perf.get(team) + parseInt(pts, 10))
     })
 
     const overall = Array.from(perf)
