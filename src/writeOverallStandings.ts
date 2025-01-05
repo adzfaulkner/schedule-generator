@@ -1,13 +1,11 @@
-import { ranges, PREVIOUS_SCHEDULE_IDS } from './config'
-
 const aliases = new Map([
     ['London Eagles', 'London Eagles Green'],
     ['London Scorpions', 'London Scorpions Gurus']
 ])
 
 export const writeOverallStandings = (
-    sFinalStandings: any[][],
     sSeriesStandings: GoogleAppsScript.Spreadsheet.Sheet,
+    finalStandings: any[][],
     previousFinalStandings: any[][]
 ): void => {
     const perf: Map<string, number> = new Map()
@@ -44,5 +42,5 @@ export const writeOverallStandings = (
         return ( ( ateam === bteam ) ? 0 : ( ( ateam > bteam ) ? 1 : -1 ) )
     })
 
-    console.log(overall)
+    console.log(overall, finalStandings)
 }

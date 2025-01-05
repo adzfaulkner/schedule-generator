@@ -49,13 +49,6 @@ export function onChange() {
     const sFinalStandings = ss.getSheetByName('Final Standings')
     const sSeriesStandings = ss.getSheetByName('Series Standings')
 
-    const previousFinalStandings = PREVIOUS_SCHEDULE_IDS.map(id => {
-        const s = SpreadsheetApp.openById(id)
-        return s.getSheetByName('Final Standings')
-            .getRange(ranges.finalStanding)
-            .getValues()
-    }).flat()
-
     const fixtureValues: Fixture[] = getRange(sRaw, ranges.fixture).getValues() as Fixture[]
     const refereeValues = getRefNames(sRefCrosstable)
 
@@ -85,9 +78,16 @@ export function onChange() {
 
     UrlFetchApp.fetch('https://e5ufi5onrd.execute-api.eu-west-2.amazonaws.com/prod/update', options)
 
+    const previousFinalStandings = PREVIOUS_SCHEDULE_IDS.map(id => {
+        const s = SpreadsheetApp.openById(id)
+        return s.getSheetByName('Final Standings')
+            .getRange(ranges.finalStanding)
+            .getValues()
+    }).flat()
+
     writeOverallStandings(
-        sFinalStandings.getRange(ranges.finalStanding).getValues(),
         sSeriesStandings,
+        sFinalStandings.getRange(ranges.finalStanding).getValues(),
         previousFinalStandings
     )
 }
