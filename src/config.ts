@@ -19,4 +19,5 @@ export const REF_ALLOCS_WRITE_FROM = 2
 export const PREVIOUS_SCHEDULE_IDS = [
     '1Y0ckxL8HvbFncwF1zpYLq_CMbshyUXTNCyU2IZnILwk', //R1
     '18DJh_p93Trq2VBzQlqB3cAYVP1NC50N9RwEYcoYF-jA', //R2
+    '1_7iZ4Xrv8Vt7GIXaecY19gwqFyUUaHXNdEHzjuAi_HQ', //R3
 ]
