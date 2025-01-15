@@ -39,7 +39,7 @@ export function onChange() {
 
     console.log(`active sheet name ${active.getName()}`)
 
-    if (!['Schedule', 'Ref Allocations', 'Ref Crosstable'].includes(active.getName())) {
+    if (!['Raw', 'Schedule', 'Ref Allocations', 'Ref Crosstable'].includes(active.getName())) {
         return
     }
 
