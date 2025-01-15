@@ -13,6 +13,7 @@ import { writeScheduleAndRefAllocations, writeSchedule, writeRefAllocations } fr
 
 import type { Fixture, RefNames } from './types'
 import URLFetchRequestOptions = GoogleAppsScript.URL_Fetch.URLFetchRequestOptions
+import * as console from "node:console";
 
 function getRefNames(refCrosstable: GoogleAppsScript.Spreadsheet.Sheet): RefNames {
     const refNames: RefNames = []
@@ -37,7 +38,9 @@ export function onChange() {
     const ss: GoogleAppsScript.Spreadsheet.Spreadsheet = SpreadsheetApp.getActive()
     const active = ss.getActiveSheet()
 
-    if (!['Raw', 'Schedule', 'Ref Allocations', 'Ref Crosstable'].includes(active.getName())) {
+    console.log(`active sheet name ${active.getName()}`)
+    
+    if (!['Schedule', 'Ref Allocations', 'Ref Crosstable'].includes(active.getName())) {
         return
     }
 
