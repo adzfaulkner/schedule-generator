@@ -37,8 +37,6 @@ export function onChange() {
     const ss: GoogleAppsScript.Spreadsheet.Spreadsheet = SpreadsheetApp.getActive()
     const active = ss.getActiveSheet()
 
-    console.log(`active sheet name ${active.getName()}`)
-
     if (!['Schedule', 'Ref Allocations', 'Ref Crosstable'].includes(active.getName())) {
         return
     }

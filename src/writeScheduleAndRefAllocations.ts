@@ -107,6 +107,10 @@ export const writeSchedule = (
     const handleFixture = ((sheet: GoogleAppsScript.Spreadsheet.Sheet, generateRange: Function, coords: Coords) => (fixture: Fixture): void => {
         const [time,,stage,home,,away] = fixture
 
+        if (!stage.toUpperCase().includes("POOL")) {
+            return
+        }
+
         const timeCellValue = coords.col === 1 ? time : ''
 
         setValues(sheet, generateRange(), [

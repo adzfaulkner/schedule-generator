@@ -172,8 +172,8 @@ describe('aggregate', function () {
 
         expect(Array.from(fixturesByPitchAndTime.keys())).toEqual(['AGP 1', 'AGP 2'])
 
-        expect(Array.from(fixturesByPitchAndTime.get('AGP 1').keys())).toEqual(['12:15', '12:45', '13:15', '13:45', '14:15', '14:45', '15:15', '15:45', '16:15', '16:45', '17:15', '17:45'])
+        expect(Array.from(fixturesByPitchAndTime.get('AGP 1').keys())).toEqual(['12:15', '12:45', '13:15', '13:45', '14:15', '14:45'])
 
-        expect(Array.from(fixturesByPitchAndTime.get('AGP 2').keys())).toEqual(['12:15', '12:45', '13:15', '13:45', '14:15', '14:45', '15:15', '15:45', '16:15', '16:45', '17:15', '17:45'])
+        expect(Array.from(fixturesByPitchAndTime.get('AGP 2').keys())).toEqual(['12:15', '12:45', '13:15', '13:45', '14:15', '14:45'])
     })
 })
