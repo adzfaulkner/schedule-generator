@@ -1,4 +1,5 @@
 import { Fixture, RefRefSum, RefSum } from './types'
+import * as console from "node:console";
 
 export const handleRefAllocations = (
     refRefTally: RefRefSum,
@@ -6,6 +7,8 @@ export const handleRefAllocations = (
 ) => ([,,,,,,,...refs]: Fixture): void =>
 {
     const filtered: string[] = refs.filter(ref => refTally.has(ref))
+
+    console.log('filtered is', filtered, refs)
 
     for (let o = 0;o < filtered.length;o++) {
         for (let i = 0;i < filtered.length;i++) {
