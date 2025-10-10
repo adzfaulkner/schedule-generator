@@ -23,8 +23,7 @@ interface WriteHCallbacks {
 }
 
 export const writeScheduleAndRefAllocations = (
-    writeSchedule: WriteHCallbacks,
-    writeRefAllocs: WriteHCallbacks,
+    writes: WriteHCallbacks[],
 ) => (
     fixturesByPitchAndTime: FixturesByPitchAndTime,
     pitches: Pitches,
@@ -32,32 +31,27 @@ export const writeScheduleAndRefAllocations = (
 ) => {
     for (const time of times) {
         // handle new time
-        writeSchedule.handleTime(time)
-        writeRefAllocs.handleTime(time)
+        writes.forEach(cb => cb.handleTime(time))
 
         for (const pitch of pitches) {
             // handle new pitch
-            writeSchedule.handlePitch(pitch)
-            writeRefAllocs.handlePitch(pitch)
+            writes.forEach(cb => cb.handlePitch(pitch))
 
             if (
                 !fixturesByPitchAndTime.has(pitch)
                 || !fixturesByPitchAndTime.get(pitch).has(time)
             ) {
                 // handle blank fields
-                writeSchedule.handleNoFixture(time)
-                writeRefAllocs.handleNoFixture(time)
+                writes.forEach(cb => cb.handleNoFixture(time))
                 continue
             }
 
             // handle writing fixture related data
-            writeSchedule.handleFixture(fixturesByPitchAndTime.get(pitch).get(time))
-            writeRefAllocs.handleFixture(fixturesByPitchAndTime.get(pitch).get(time))
+            writes.forEach(cb => cb.handleFixture(fixturesByPitchAndTime.get(pitch).get(time)))
         }
     }
 
-    writeSchedule.cleanUp()
-    writeRefAllocs.cleanUp()
+    writes.forEach(cb => cb.cleanUp())
 }
 
 export const writeSchedule = (

@@ -40,10 +40,10 @@ describe('writeScheduleAndRefAllocations', function () {
         // @ts-ignore
         refAllocsSheet.getRange.mockReturnValue(refAllocsRange)
 
-        const sut = writeScheduleAndRefAllocations(
+        const sut = writeScheduleAndRefAllocations([
             writeSchedule(scheduleSheet, 14),
             writeRefAllocations(refAllocsSheet, 2)
-        )
+        ])
 
         sut(fixturesByPitchAndTime, pitches, times)
 

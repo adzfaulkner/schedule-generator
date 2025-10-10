@@ -1,10 +1,10 @@
 export const ranges = {
     // raw sheet fixture list - time cell to last ref
-    fixture: 'B1:J18',
+    fixture: 'A1:J30',
     // referee names column of the ref cross table
-    refNames: 'A2:A9',
+    refNames: 'A2:A12',
     // 1st referee tally cell (should be blacked out) to bottom right of the total column
-    refRefTally: 'D2:L8',
+    refRefTally: 'D2:M12',
     // where to write the standings from
     standings: 'A1:J',
     // ignore the header
@@ -16,8 +16,4 @@ export const SCHEDULE_WRITE_FROM_ROW = 6
 
 export const REF_ALLOCS_WRITE_FROM = 2
 
-export const PREVIOUS_SCHEDULE_IDS = [
-    '1Y0ckxL8HvbFncwF1zpYLq_CMbshyUXTNCyU2IZnILwk', //R1
-    '18DJh_p93Trq2VBzQlqB3cAYVP1NC50N9RwEYcoYF-jA', //R2
-    '1_7iZ4Xrv8Vt7GIXaecY19gwqFyUUaHXNdEHzjuAi_HQ', //R3
-]
+export const PREVIOUS_SCHEDULE_IDS = []

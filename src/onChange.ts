@@ -64,10 +64,10 @@ export function onChange() {
     writeRefCrossTable(sRefCrosstable)(refRefTally, refTally)
     writeStandings(sStandings, ranges.standings)(combinedPools(poolsTeamsPerformance))
 
-    writeScheduleAndRefAllocations(
+    writeScheduleAndRefAllocations([
         writeRefAllocations(sRefAllocs, REF_ALLOCS_WRITE_FROM),
         writeSchedule(sSchedule, SCHEDULE_WRITE_FROM_ROW)
-    )(fixturesByPitchAndTime, pitches, times)
+    ])(fixturesByPitchAndTime, pitches, times)
 
     const options: URLFetchRequestOptions = {
         'method': 'put',
