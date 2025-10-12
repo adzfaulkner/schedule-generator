@@ -16,7 +16,7 @@ run_tests:
 	make js_run_command cmd='npm test'
 
 clasp_login:
-	make clasp_run_command args='login'
+	make clasp_run_command cmd='login'
 
 setup:
 	make build
